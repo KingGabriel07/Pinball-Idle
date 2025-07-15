@@ -8,7 +8,15 @@ public class DestroyBalls : MonoBehaviour
     #endregion
     void Start()
     {
-        
+        if (GameData.Instance != null)
+        {
+            destructionMultiplier = GameData.Instance.multiplierValue;
+        }
+        else
+        {
+            destructionMultiplier = 1; // Fallback default if GameData isn't ready
+            Debug.LogWarning("GameData.Instance is null, using fallback value for ballValue.");
+        }
     }
 
     // Update is called once per frame
@@ -40,5 +48,9 @@ public class DestroyBalls : MonoBehaviour
         {
             Debug.LogWarning("Collided object does not have a BallBehavior component!");
         }
+    }
+    public void UpdateMultLevel()
+    {
+        destructionMultiplier = GameData.Instance.multiplierValue;
     }
 }

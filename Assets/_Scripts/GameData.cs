@@ -4,14 +4,21 @@ public class GameData : MonoBehaviour
 {
     #region Variables
     [Header("Player values")]
+    [Tooltip("Core resources")]
     public int score = 0;
-
+    [Space(5)]
+    [Tooltip("Ball stats")]
     public int defaultBallValue = 1;
     public int ballValueLevel = 1;
     public int ballValueUpgradePrice = 10;
-
+    [Space(5)]
+    [Tooltip("Multiplier stats")]
+    public int multiplierValue = 1;
+    public int multiplierLevel = 1;
+    public int multiplierUpgradePrice = 200;
     [Header("References")]
     private TextUpdater updater; // Cached internally
+    public DestroyBalls DestroyBalls;
 
     public static GameData Instance { get; private set; }
     #endregion
@@ -39,6 +46,7 @@ public class GameData : MonoBehaviour
         {
             updater.RegisterTextObject("ScoreText");
             updater.RegisterTextObject("BallValUpgText");
+            updater.RegisterTextObject("MultiplierUpgText");
         }
         else
         {
@@ -51,6 +59,7 @@ public class GameData : MonoBehaviour
     private void UpdateAllText()
     {
         updater.SetText("BallValUpgText", "Increase Ball Value: $" + ballValueUpgradePrice);
+        updater.SetText("MultiplierUpgText", "Increase Multiplier Value: $" + multiplierUpgradePrice);
         updater.SetText("ScoreText", "$" + score);
     }
     #endregion
@@ -66,7 +75,19 @@ public class GameData : MonoBehaviour
             ballValueUpgradePrice = Mathf.RoundToInt(10f * Mathf.Pow(1.6f, ballValueLevel));
             UpdateAllText();
         }
-        
+    }
+
+    public void UpgradeEndMult()
+    {
+        if (score >= multiplierUpgradePrice)
+        {
+            multiplierLevel++;
+            multiplierValue = multiplierLevel;
+            score -= multiplierUpgradePrice;
+            multiplierUpgradePrice = Mathf.RoundToInt(Mathf.Pow(10f, multiplierLevel) * Mathf.RoundToInt(Mathf.Pow(2f, multiplierLevel)));
+            UpdateAllText();
+            DestroyBalls.UpdateMultLevel();
+        }
     }
     #endregion
 
