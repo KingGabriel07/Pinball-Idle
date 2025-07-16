@@ -1050,7 +1050,7 @@ GameObject:
   - component: {fileID: 389112257}
   - component: {fileID: 389112256}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Peg Upgrade Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3833,6 +3833,8 @@ MonoBehaviour:
   multiplierValue: 1
   multiplierLevel: 1
   multiplierUpgradePrice: 100
+  pegUpgradePrice: 5000
+  pegLevel: 0
   DestroyBalls: {fileID: 1715602912}
 --- !u!1001 &1292618907
 PrefabInstance:
@@ -4686,7 +4688,7 @@ GameObject:
   - component: {fileID: 1548898919}
   - component: {fileID: 1548898918}
   m_Layer: 5
-  m_Name: Ball Value Button
+  m_Name: Peg Number Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,6 +16,10 @@ public class GameData : MonoBehaviour
     public int multiplierValue = 1;
     public int multiplierLevel = 1;
     public int multiplierUpgradePrice = 200;
+    [Space(5)]
+    [Tooltip("Peg stats")]
+    public int pegUpgradePrice = 5000;
+    public int pegLevel = 0;
     [Header("References")]
     private TextUpdater updater; // Cached internally
     public DestroyBalls DestroyBalls;
@@ -60,6 +64,7 @@ public class GameData : MonoBehaviour
     {
         updater.SetText("BallValUpgText", "Increase Ball Value: $" + ballValueUpgradePrice);
         updater.SetText("MultiplierUpgText", "Increase Multiplier Value: $" + multiplierUpgradePrice);
+        updater.SetText("Peg Upgrade Text", "Increase Number of Pegs: $" + pegUpgradePrice);
         updater.SetText("ScoreText", "$" + score);
     }
     #endregion
@@ -67,7 +72,7 @@ public class GameData : MonoBehaviour
     #region Upgrade stats
     public void UpgradeBallValue()
     {
-        if(score >= ballValueUpgradePrice)
+        if (score >= ballValueUpgradePrice)
         {
             ballValueLevel++;
             defaultBallValue = Mathf.RoundToInt(ballValueLevel * 1.3f);
@@ -80,6 +85,19 @@ public class GameData : MonoBehaviour
     public void UpgradeEndMult()
     {
         if (score >= multiplierUpgradePrice)
+        {
+            multiplierLevel++;
+            multiplierValue = multiplierLevel;
+            score -= multiplierUpgradePrice;
+            multiplierUpgradePrice = Mathf.RoundToInt(Mathf.Pow(10f, multiplierLevel) * Mathf.RoundToInt(Mathf.Pow(2f, multiplierLevel)));
+            UpdateAllText();
+            DestroyBalls.UpdateMultLevel();
+        }
+    }
+
+    public void UpgradePegNumber()
+    {
+        if (score >= pegUpgradePrice)
         {
             multiplierLevel++;
             multiplierValue = multiplierLevel;
