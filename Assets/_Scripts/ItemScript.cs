@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class ItemScript : MonoBehaviour
 {
+    public string itemName;
+    public int itemID;
     public HandleItemPositions inventory;
 
     private void OnMouseDown()
     {
-        Debug.Log("Clicked on: " + gameObject.name);
-        inventory.PickUpItem(this.gameObject);
+        inventory.PickUpItem(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        inventory?.UnregisterItem(gameObject); // Safety check
     }
 }
