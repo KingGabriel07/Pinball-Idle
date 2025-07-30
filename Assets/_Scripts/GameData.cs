@@ -20,6 +20,8 @@ public class GameData : MonoBehaviour
     [Tooltip("Peg stats")]
     public int pegUpgradePrice = 5000;
     public int pegLevel = 0;
+    public GameObject[] pegs = new GameObject[10];
+    public int pegsLevel = 0;
     [Header("References")]
     private TextUpdater updater; // Cached internally
     public DestroyBalls DestroyBalls;
@@ -51,6 +53,7 @@ public class GameData : MonoBehaviour
             updater.RegisterTextObject("ScoreText");
             updater.RegisterTextObject("BallValUpgText");
             updater.RegisterTextObject("MultiplierUpgText");
+            updater.RegisterTextObject("PegUpgText");
         }
         else
         {
@@ -60,11 +63,12 @@ public class GameData : MonoBehaviour
         UpdateAllText();
     }
 
+
     private void UpdateAllText()
     {
         updater.SetText("BallValUpgText", "Increase Ball Value: $" + ballValueUpgradePrice);
         updater.SetText("MultiplierUpgText", "Increase Multiplier Value: $" + multiplierUpgradePrice);
-        updater.SetText("Peg Upgrade Text", "Increase Number of Pegs: $" + pegUpgradePrice);
+        updater.SetText("PegUpgText", "Increase Number of Pegs: $" + pegUpgradePrice);
         updater.SetText("ScoreText", "$" + score);
     }
     #endregion
@@ -105,6 +109,18 @@ public class GameData : MonoBehaviour
             multiplierUpgradePrice = Mathf.RoundToInt(Mathf.Pow(10f, multiplierLevel) * Mathf.RoundToInt(Mathf.Pow(2f, multiplierLevel)));
             UpdateAllText();
             DestroyBalls.UpdateMultLevel();
+        }
+    }
+
+    public void UpgradePegs()
+    {
+        if (pegsLevel < 9)
+        {
+            pegsLevel++;
+            Vector3 targetPos = pegs[pegsLevel - 1].transform.position;
+            Vector3 targetPos2 = pegs[pegsLevel].transform.position;
+            pegs[pegsLevel].transform.position = targetPos;
+            pegs[pegsLevel - 1].transform.position = targetPos2;
         }
     }
     #endregion

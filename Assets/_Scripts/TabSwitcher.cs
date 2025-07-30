@@ -7,13 +7,11 @@ public class TabSwitcher : MonoBehaviour
     [Header("Tabs (Set these in the Inspector)")]
     public GameObject[] tabs = new GameObject[4];
     public GameObject[] uiTabs = new GameObject[4];
-    public GameObject[] balls = new GameObject[10];
 
     [Header("Tab Positions")]
     public float activeXPosition = 0f;
     public float inactiveXPosition = 100f;
     public float inactiveUiPosition = 100f;
-    public int ballsLevel = 0;
 
 
     /// <summary>
@@ -70,15 +68,5 @@ public class TabSwitcher : MonoBehaviour
         }
     }
 
-    public void UpgradeBalls()
-    {
-        if(ballsLevel < 9)
-        {
-            ballsLevel++;
-            Vector3 targetPos = balls[ballsLevel - 1].transform.position;
-            Vector3 targetPos2 = balls[ballsLevel].transform.position;
-            balls[ballsLevel].transform.position = targetPos;
-            balls[ballsLevel - 1].transform.position = targetPos2;
-        }   
-    }
+    
 }
